@@ -27,6 +27,10 @@
 #define EXPORT
 #endif
 
+#ifdef AIX_NATURAL_ALIGN
+#pragma align(natural)
+#endif
+
 #define macro_byte (char) 1
 #define macro_short (short) 1
 #define macro_int 1

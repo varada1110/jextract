@@ -31,6 +31,10 @@ extern "C" {
 #define EXPORT
 #endif
 
+#ifdef AIX_NATURAL_ALIGN
+#pragma align(natural)
+#endif
+
 typedef struct Point {
     int x;
     int y;

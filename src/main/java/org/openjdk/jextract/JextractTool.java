@@ -487,6 +487,7 @@ public final class JextractTool {
         // 64 bit mode on AIX
         if (System.getProperty("os.name").toLowerCase().contains("aix")) {
             builder.addClangArg("-m64");
+            builder.addClangArg("-DAIX_NATURAL_ALIGN=1");
         }
 
         if (optionSet.nonOptionArguments().isEmpty()) {
