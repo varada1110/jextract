@@ -485,7 +485,7 @@ final class StructBuilder extends ClassSourceBuilder implements OutputFactory.Bu
                     // };
                     long fieldTypeAlign = ClangAlignOf.getOrThrow(var) / 8;
                     long expectedAlign = Math.min(scopedTypeAlign, fieldTypeAlign);
-                    memberLayout = fieldLayoutString(var.type(), fieldTypeAlign, expectedAlign);
+                    memberLayout = layoutString(var.type(), expectedAlign);
                     memberLayout = String.format("%1$s%2$s.withName(\"%3$s\")", indentString(indent + 1), memberLayout, member.name());
                 } else {
                     // anon struct
