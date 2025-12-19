@@ -460,7 +460,7 @@ final class StructBuilder extends ClassSourceBuilder implements OutputFactory.Bu
 
         boolean isStruct = scoped.kind() == Scoped.Kind.STRUCT;
 
-        long scopedTypeAlign = ClangAlignOf.getOrThrow(scoped) / 8;
+        long align = ClangAlignOf.getOrThrow(scoped) / 8;
         long offset = base;
 
         long size = 0L; // bits
@@ -477,15 +477,7 @@ final class StructBuilder extends ClassSourceBuilder implements OutputFactory.Bu
                 }
                 String memberLayout;
                 if (member instanceof Variable var) {
-                    // FIXME we can not handle hyper-aligned fields here since clang doesn't attach the
-                    // alignment specified by a field alignment specifier to the field declaration cursor.
-                    //
-                    // struct foo { // ClangAlignOf == 8
-                    //     _Alignas(8) int x; // ClangAlignOf == 4
-                    // };
-                    long fieldTypeAlign = ClangAlignOf.getOrThrow(var) / 8;
-                    long expectedAlign = Math.min(scopedTypeAlign, fieldTypeAlign);
-                    memberLayout = layoutString(var.type(), expectedAlign);
+                    memberLayout = layoutString(var.type(), align);
                     memberLayout = String.format("%1$s%2$s.withName(\"%3$s\")", indentString(indent + 1), memberLayout, member.name());
                 } else {
                     // anon struct
