@@ -477,7 +477,9 @@ final class StructBuilder extends ClassSourceBuilder implements OutputFactory.Bu
                 }
                 String memberLayout;
                 if (member instanceof Variable var) {
-                    memberLayout = layoutString(var.type(), align);
+                    long fieldAlign = ClangAlignOf.getOrThrow(member) / 8;
+                    long effectiveAlign = Math.min(fieldAlign, align);
+                    memberLayout = layoutString(var.type(), effectiveAlign);
                     memberLayout = String.format("%1$s%2$s.withName(\"%3$s\")", indentString(indent + 1), memberLayout, member.name());
                 } else {
                     // anon struct

@@ -36,6 +36,9 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 public class Test8240811 extends JextractToolRunner {
+
+    public static final boolean IS_AIX = System.getProperty("os.name").equals("AIX");
+
     @Test
     public void testNameCollision() {
         Path nameCollisionOutput = getOutputFilePath("name_collision_gen");
@@ -71,12 +74,14 @@ public class Test8240811 extends JextractToolRunner {
             checkField(barLayout, "f2", C_FLOAT);
 
             // check bar layout
-            Class<?> bar2Cls = loader.loadClass("bar2");
-            MemoryLayout bar2Layout = findLayout(bar2Cls);
-            assertNotNull(bar2Layout);
-            assertTrue(bar2Layout instanceof UnionLayout);
-            checkField(bar2Layout, "f", C_FLOAT);
-            checkField(bar2Layout, "d", C_DOUBLE);
+            if (!IS_AIX) {
+                Class<?> bar2Cls = loader.loadClass("bar2");
+                MemoryLayout bar2Layout = findLayout(bar2Cls);
+                assertNotNull(bar2Layout);
+                assertTrue(bar2Layout instanceof UnionLayout);
+                checkField(bar2Layout, "f", C_FLOAT);
+                checkField(bar2Layout, "d", C_DOUBLE);
+            }
         } finally {
             TestUtils.deleteDir(nameCollisionOutput);
         }

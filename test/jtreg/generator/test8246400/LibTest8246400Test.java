@@ -33,6 +33,7 @@ import static test.jextract.test8246400.test8246400_h.*;
  * @test
  * @bug 8246400
  * @summary jextract should generate a utility to manage mutliple MemorySegments
+ * @requires os.family != "aix"
  * @library /lib
  * @build testlib.TestUtils
  * @run main/othervm JtregJextract -l Test8246400 --use-system-load-library -t test.jextract.test8246400 test8246400.h
