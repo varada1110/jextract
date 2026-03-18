@@ -82,6 +82,8 @@ else
 
       CC_NAME := gcc
       LINK_NAME := gcc
+      CFLAGS += -O3
+      LDFLAGS += -O3
       ifneq ($(SYSROOT),)
         CFLAGS += --sysroot=$(SYSROOT)
       endif

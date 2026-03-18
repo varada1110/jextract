@@ -27,7 +27,7 @@ foreach(TEST_LIB ${TEST_LIBS})
     )
 
     # Link against libm to resolve sqrt() and other math symbols
-    find_library(LIBM, m)
+    find_library(LIBM m)
     if(LIBM)
       target_link_libraries(${LIB_NAME} ${LIBM})
     endif()
